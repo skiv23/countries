@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <section class="section-chart">
+    <h2>{% trans 'Countries with most borders' %}</h2>
+
+    <svg id="chart"></svg>
+  </section>
+  <section class="section-table">
+    <h2>{% trans 'Countries bordering China' %}</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Region' %}</th>
+          <th>{% trans 'Area' %}</th>
+          <th>{% trans 'Population' %}</th>
+          <th>{% trans 'Flag' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for country in borders_with_china %}
+          <tr>
+            <td>{{ country.name }}</td>
+            <td>{{ country.region }}</td>
+            <td>{{ country.area }}</td>
+            <td>{{ country.population }}</td>
+            <td><img class="flag" src="{{ country.flag }}" alt="{{ country.name }}{% trans 'Flag' %}"></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">{% trans 'No countries found!' %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  </section>
+{% endblock %}
+
+{% block main %}
+  <div class="container-fluid">
+    <button class="btn btn-primary btn-sm">{% trans 'Export to PDF' %}</button>
+  </div>
+  {{ block.super }}
+{% endblock %}
+
+{% block footer_js %}
+  <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="{% static 'js/d3-tip.js' %}"></script>
+  <script>
+    window.chartData = JSON.parse('{{ top_borders|safe }}')
+
+  </script>
+  <script src="{% static 'js/chart.js' %}"></script>
+  <script src="{% static 'js/export.js' %}"></script>
+{% endblock %}
+

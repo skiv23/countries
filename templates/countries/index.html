@@ -5,7 +5,6 @@
 {% block content %}
   <section class="section-chart">
     <h2>{% trans 'Countries with most borders' %}</h2>
-
     <svg id="chart"></svg>
   </section>
   <section class="section-table">
@@ -27,7 +26,7 @@
             <td>{{ country.region }}</td>
             <td>{{ country.area }}</td>
             <td>{{ country.population }}</td>
-            <td><img class="flag" src="{{ country.flag }}" alt="{{ country.name }}{% trans 'Flag' %}"></td>
+            <td><img class="flag" src="{{ country.flag }}" alt="{{ country.name }} {% trans 'Flag' %}"></td>
           </tr>
         {% empty %}
           <tr>
@@ -35,13 +34,13 @@
           </tr>
         {% endfor %}
       </tbody>
-  </table>
+    </table>
   </section>
 {% endblock %}
 
 {% block main %}
-  <div class="container-fluid">
-    <button class="btn btn-primary btn-sm">{% trans 'Export to PDF' %}</button>
+  <div class="container-fluid m-4 text-center">
+    <button class="btn btn-primary btn-sm">{% trans 'Generate PDF' %}</button>
   </div>
   {{ block.super }}
 {% endblock %}
@@ -52,7 +51,6 @@
   <script src="{% static 'js/d3-tip.js' %}"></script>
   <script>
     window.chartData = JSON.parse('{{ top_borders|safe }}')
-
   </script>
   <script src="{% static 'js/chart.js' %}"></script>
   <script src="{% static 'js/export.js' %}"></script>

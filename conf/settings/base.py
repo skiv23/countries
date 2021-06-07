@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import environ
 import os
-import django_heroku
 
 from pathlib import Path
 
@@ -145,5 +144,3 @@ try:
     from .local_settings import *
 except ImportError:
     pass
-
-django_heroku.settings(locals())
